@@ -50,6 +50,7 @@ kotlin {
         }
     }
 }
+```
 
 ## Build locally
 

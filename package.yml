@@ -2,7 +2,7 @@ name: Compose System UI
 description: Control system bar appearance in Compose Multiplatform apps.
 groupId: com.composables
 artifactId: system-ui
-version: 0.1.1
+version: 1.1.1
 url: https://github.com/composablehorizons/system-ui
 licenses:
   - name: MIT License

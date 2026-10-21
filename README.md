@@ -48,7 +48,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("com.composables:system-ui:0.1.0")
+            implementation("com.composables:system-ui:1.1.1")
         }
     }
 }

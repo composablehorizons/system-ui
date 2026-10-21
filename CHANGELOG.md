@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-21
+
+- [Changes since v0.1.0](https://github.com/composablehorizons/system-ui/compare/v0.1.0...v1.1.1).
+
 ## [0.1.1] - 2026-10-21
 
 ### Fixed

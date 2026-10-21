@@ -66,20 +66,14 @@ Standalone builds include Android, iOS arm64/simulator arm64, JVM, and Wasm.
 
 ## Releasing
 
-Install KPM:
+Run **Release** in GitHub Actions and enter a version such as `0.1.1`. You can also dispatch it from the CLI:
 
 ```sh
-npm install --global @composablehorizons/kpm@0.1.0
+gh workflow run publish.yml --ref main --field version=0.1.1
 ```
 
-Set the release notes in `CHANGELOG.md`, then run from this directory:
+The workflow checks out `main`, updates `package.yml` using KPM, promotes `CHANGELOG.md`'s Unreleased notes to the requested version when needed, and updates the README dependency. It runs tests and builds all platform publications before pushing the release commit and tag. Then `kpm publish` publishes signed artifacts to Maven Central. No local versioning, tag management, or release PR is needed.
 
-```sh
-./gradlew jvmTest testAndroidHostTest publishToMavenLocal
-kpm version patch
-git push --follow-tags
-```
-
-`package.yml` owns the version and Maven publishing metadata. The tagged GitHub Actions release checks the version, runs JVM tests, builds all platform publications, and publishes signed artifacts with `kpm publish`. After every platform artifact is downloadable from Maven Central, it creates a draft GitHub release from the changelog. Review and publish that draft separately.
+Keep release notes under `## [Unreleased]`, or prepare a dated section for the requested version. After every platform artifact is downloadable from Maven Central, the workflow creates a draft GitHub release from those notes. Review and publish that draft separately. Dispatching an existing version retries publication from its original tag without creating another commit or changing the tag. Pushing a tag does not trigger publishing.
 
 Publishing uses the `maven-central` environment and the organization secrets `OSSRH_USERNAME`, `OSSRH_PASSWORD`, `SIGNING_KEY_ID`, `SIGNING_PASSWORD`, and `SIGNING_KEY`.

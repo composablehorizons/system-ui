@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Keep Android system bar icons correct when outgoing screens leave during navigation, and restore the original appearance after the last override closes.
+- Apply Android dialog icon changes to the dialog window without changing the screen underneath.
+
 ## [0.1.0] - 2026-10-16
 
 ### Added

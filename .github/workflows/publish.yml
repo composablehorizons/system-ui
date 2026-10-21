@@ -57,7 +57,7 @@ jobs:
           test "$RELEASE_REF" = "v$(kpm version)"
           grep -Fq "## [$(kpm version)] - " CHANGELOG.md
       - name: Verify tests and all platform publications
-        run: ./gradlew jvmTest publishToMavenLocal --no-configuration-cache --console=plain
+        run: ./gradlew jvmTest testAndroidHostTest publishToMavenLocal --no-configuration-cache --console=plain
       - name: Publish with KPM
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}

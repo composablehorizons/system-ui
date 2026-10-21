@@ -18,6 +18,8 @@ fun App() {
 
 `Light` means light-colored icons; `Dark` means dark-colored icons. `Default` leaves the native setting unchanged. On Android the composition must be hosted in an Activity. The library makes the navigation bar transparent, disables navigation-bar contrast enforcement where available, and restores previous settings when the effect leaves composition.
 
+Android requests share an owner per window. Closing an outgoing screen or modal keeps any remaining appearance request active; the original icon, navigation-bar color and contrast settings return after the last request leaves. Native dialogs use their own window.
+
 ## iOS host
 
 Host the app with the library's controller so UIKit can read the requested status-bar style:
@@ -57,7 +59,7 @@ kotlin {
 Use JDK 17, Xcode for iOS, and Android SDK platform 37. From this directory:
 
 ```sh
-./gradlew jvmTest publishToMavenLocal
+./gradlew jvmTest testAndroidHostTest publishToMavenLocal
 ```
 
 Standalone builds include Android, iOS arm64/simulator arm64, JVM, and Wasm.
@@ -73,7 +75,7 @@ npm install --global @composablehorizons/kpm@0.1.0
 Set the release notes in `CHANGELOG.md`, then run from this directory:
 
 ```sh
-./gradlew jvmTest publishToMavenLocal
+./gradlew jvmTest testAndroidHostTest publishToMavenLocal
 kpm version patch
 git push --follow-tags
 ```

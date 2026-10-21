@@ -45,13 +45,20 @@ def main():
             changelog,
             re.MULTILINE | re.DOTALL,
         )
-        if not unreleased or not unreleased.group(1).strip():
-            raise SystemExit("Add release notes under ## [Unreleased] before dispatching.")
+        if not unreleased:
+            raise SystemExit("CHANGELOG.md must contain an ## [Unreleased] heading.")
+        notes = unreleased.group(1).strip()
+        if not notes:
+            previous = run("git", "tag", "--merged", "HEAD", "--sort=-version:refname")
+            tags = [item for item in previous.splitlines() if re.fullmatch(r"v\d+\.\d+\.\d+", item)]
+            repository = "https://github.com/composablehorizons/system-ui"
+            if tags:
+                notes = f"- [Changes since {tags[0]}]({repository}/compare/{tags[0]}...{tag})."
+            else:
+                notes = f"- [Release history]({repository}/commits/{tag})."
         date = datetime.datetime.now(datetime.timezone.utc).date()
         heading = f"## [Unreleased]\n\n## [{version}] - {date}\n"
-        changelog = changelog[:unreleased.start()] + unreleased.group(0).replace(
-            "## [Unreleased]\n", heading, 1
-        ) + changelog[unreleased.end():]
+        changelog = changelog[:unreleased.start()] + heading + "\n" + notes + "\n\n" + changelog[unreleased.end():]
 
     readme_path = Path("README.md")
     readme, count = re.subn(

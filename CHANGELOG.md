@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-21
+
 ### Fixed
 
 - Keep Android system bar icons correct when outgoing screens leave during navigation, and restore the original appearance after the last override closes.
